@@ -1,0 +1,46 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/GameModeBase.h"
+#include "GridManager.h"
+#include "AIEngineGameMode.generated.h"
+
+/**
+ *  Simple GameMode for a third person game
+ */
+UCLASS(minimalapi)
+class AAIEngineGameMode : public AGameModeBase
+{
+	GENERATED_BODY()
+
+
+public:
+	AAIEngineGameMode();
+	virtual void BeginPlay() override;
+
+protected:
+	//////// FIELDS ////////
+	UPROPERTY()
+	AGridManager* GridManager;
+
+	//////// METHODS ////////
+	//// Delegates methods
+	UFUNCTION()
+	void OnGridStateChanged();
+
+	UFUNCTION()
+	void OnPathReCalculated(const TArray<FVector>& Path, const TArray<FVector>& ExploredNodes);
+
+private:
+	//////// METHODS ////////
+	//// Grid methods
+	void InitializeGrid();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AGridManager> GridManagerClass;
+};
+
+
+
